@@ -21,7 +21,7 @@ object CL {
     } else if (str1.length == str2.length) {
       // Account for asymmetry due to imperfect algorithm
       val d1 = levenshtein(string1, string2)
-      val d2 = levenshtein(string1, string2)
+      val d2 = levenshtein(string2, string1)
       Math.min(d1,d2)
     } else {
       levenshtein(string2, string1)
