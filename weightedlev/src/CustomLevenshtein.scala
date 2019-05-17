@@ -2,10 +2,16 @@ import scala.math
 
 object CL {
 
+  // This is the cost array.
+  // Here it is defined to be an analytic function,
+  // however, this is not necessary.
+  // It can be adjusted to best fit the application.
   val n = 100
-  val exponent = 2//1.5
+  val exponent = 2
   val weights: Vector[Double] = (for (i <- 0 to n) yield { 1.0 / math.pow(exponent, i * 0.5) }).toVector
 
+  // If the reverse parameter is used, the words are reversed.
+  // This is useful for eg. finding rhyming patterns.
   def levenshtein(str1: String, str2: String, reverse: Boolean): Double = {
     val string1 = if (reverse) str1.reverse else str1
     val string2 = if (reverse) str2.reverse else str2
@@ -13,6 +19,7 @@ object CL {
     if (str1.length > str2.length) {
       levenshtein(string1, string2)
     } else if (str1.length == str2.length) {
+      // Account for asymmetry due to imperfect algorithm
       val d1 = levenshtein(string1, string2)
       val d2 = levenshtein(string1, string2)
       Math.min(d1,d2)
@@ -21,7 +28,9 @@ object CL {
     }
   }
 
-  def levenshtein(str1: String, str2: String): Double = {
+
+  private def levenshtein(str1: String, str2: String): Double = {
+    // This is a helper function
     def min(nums: Double*): Double = nums.min
 
     val lenStr1 = str1.length
@@ -47,6 +56,7 @@ object CL {
     d(lenStr1)(lenStr2)
   }
 
+  // Test that it works.
   println(levenshtein("moi", "mia"))
 
 }
