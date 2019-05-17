@@ -1,4 +1,5 @@
-//println(weights)
+import java.io.PrintWriter
+
 object DataGenerator extends App {
   
   def cleanUp(s: String): String = {
@@ -15,15 +16,20 @@ object DataGenerator extends App {
   val filename = if (useTestData) "testidata.txt" else "data/text/whole_dataset.txt"
   val sourceStr = scala.io.Source.fromFile(filename).getLines().toVector.reduce(_ + " " + _)
   val cleanStr = cleanUp(sourceStr)
+
+  // whether words are reversed for distance calculation 
   val reverse = false
-  println(cleanStr)
+  val numberOfWords = 10000
   val distinctWords = cleanStr.split(" ")
     .map(word => word.toLowerCase )
-    .distinct.toVector.take(200)
+    .distinct
+    .toVector
+    .take(numberOfWords)
 
-
+  // print out a small sample of the data
   println(distinctWords.take(10))
 
+  // Calculate number of words in case dataset size is smaller than numberOfWords
   val wordCount = distinctWords.length
   println(wordCount)
   val distances: Array[Array[Double]] = Array.ofDim(wordCount, wordCount)
@@ -45,7 +51,8 @@ object DataGenerator extends App {
 
   def arrayToRow(a: Array[Double]) = a.map(_.toString().take(8)).reduce(_ + ", " + _)
 
-  import java.io.PrintWriter
+  println ("Start printing process...")
+
   val outputFilename = "data/reverse-" + reverse + "/distances/distanceMatrix"
   var printer = new PrintWriter(outputFilename + "0.csv")
 
