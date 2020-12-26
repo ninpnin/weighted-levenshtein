@@ -8,7 +8,7 @@ object CL {
   // It can be adjusted to best fit the application.
   val n = 100
   val exponent = 2
-  val weights: Vector[Double] = (for (i <- 0 to n) yield { 1.0 / math.pow(exponent, i * 0.5) }).toVector
+  val weights = for (i <- 0 to n) yield { 1.0 / math.pow(exponent, i * 0.5) }
 
   // If the reverse parameter is used, the words are reversed.
   // This is useful for eg. finding rhyming patterns.
